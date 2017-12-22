@@ -16,15 +16,21 @@ func (r *rand_st) rand() int {
     return r.X
 }
 
+func (r *rand_st) wrong_even_rand(min, max int) int {
+    x := r.rand()
+    return min + x%(max-min+1)
+}
+
 func main() {
     r := newRand(7, 5, 11, 0)
-    hist := [11]int{}
+    const SIZE = 20
+    hist := [SIZE+1]int{}
     for i := 0; i < 1000; i++ {
-        x := r.rand()
+        x := r.wrong_even_rand(0, SIZE)
         hist[x]++
     }
 
-    for i,v := range(hist) {
-        fmt.Println("hist[i: ", i, "]: ", v)
+    for k,v := range(hist) {
+        fmt.Println("hist[k: ", k, "]: ", v)
     }
 }
